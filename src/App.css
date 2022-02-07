@@ -36,3 +36,122 @@
     transform: rotate(360deg);
   }
 }
+
+
+.letter-grid {
+  flex-grow: 1;
+  vertical-align: center;
+  justify-content: center;
+}
+
+.letter-tile {
+  height: 60px;
+  width: 60px;
+  line-height: 60px;
+  font-size: 48px;
+  text-align: center;
+  border: 1px solid black;
+  margin: 1px;
+}
+
+.letter-row {
+  width: 320px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.word-container {
+  height: 100vh;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  vertical-align: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.page-title {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 48px;
+}
+
+.key-tile {
+  height: 56px;
+  width: 41px;
+  line-height: 56px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #e3e3e3;
+  margin: 1px 1px 1px 1px;
+  cursor: pointer;
+}
+
+.correct-letter { 
+  background-color: #6aaa64;
+}
+
+.in-word {
+  background-color: #c9b458;
+}
+
+.wrong-letter {
+  background-color: #86888a;
+}
+
+.letter-set {
+  transition: transform 2s;
+  transform-style: preserve-3d;
+  transform: rotateX(360deg);
+}
+
+.row > * {
+  padding-left: 0px !important;
+  padding-right:0px !important;
+}
+
+.share-button {
+  background-color: #6aaa64;
+  height: 40px;
+  width: 100px;
+  line-height: 40px;
+  font-size: 28px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.share-button:hover {
+  background-color: #4d7c48;
+}
+
+.countdown {
+  text-align: center;
+  font-size: 20px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.graph-header {
+  text-align: center;
+}
+
+.frequency-list > li {
+  text-align: right;
+  margin-right: 10px;
+}
+
+.graph-bars > li {
+  background-color: #6aaa64;
+  padding-left: 5px;
+}
+
+.congrats-message {
+  position: absolute;
+  top: 75px;
+  text-align: center;
+  font-size: 30px;
+  width: 320px;
+}
