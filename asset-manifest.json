@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Bortle/static/css/main.16ecc0ff.css",
+    "main.js": "/Bortle/static/js/main.ff959ea3.js",
+    "static/js/787.dc4145a2.chunk.js": "/Bortle/static/js/787.dc4145a2.chunk.js",
+    "index.html": "/Bortle/index.html",
+    "main.16ecc0ff.css.map": "/Bortle/static/css/main.16ecc0ff.css.map",
+    "main.ff959ea3.js.map": "/Bortle/static/js/main.ff959ea3.js.map",
+    "787.dc4145a2.chunk.js.map": "/Bortle/static/js/787.dc4145a2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.16ecc0ff.css",
+    "static/js/main.ff959ea3.js"
+  ]
+}
