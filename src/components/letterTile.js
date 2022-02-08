@@ -7,10 +7,11 @@ class LetterTile extends React.Component {
     }
 
     render() {
+        console.log("I am active!");
         return (
             <div className="col letter-tile">
-                        <div className={this.props.letter.className}>
-                            {this.props.letter.letter}
+                        <div className={this.props.letterData.className}>
+                            {this.props.letterData.letter}
                         </div>
 
             </div>

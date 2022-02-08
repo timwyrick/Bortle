@@ -5,13 +5,12 @@ class LetterGrid extends React.Component {
 
     constructor (props) {
         super(props)
-        this.state = { letters: props.letters }
       }
 
     render() {
         return (
         <div className="letter-grid">
-            {this.state.letters.map((rowLetters) => { return ( <LetterRow rowLetters={rowLetters}></LetterRow>)}) }
+            {this.props.letters.map((rowLetters) => { return ( <LetterRow rowLetters={rowLetters}></LetterRow>)}) }
         </div>
         );
       }

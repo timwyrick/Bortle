@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CongratsMessage } from './components/congratsMessage.js'
 import { CompleteModal } from './components/completeModal.js'
 import { LetterGrid } from './components/letterGrid.js';
 import { KeyBoard } from './components/keyBoard.js';
@@ -8,7 +7,6 @@ import './App.css';
 
 function App() {
 
-  var isInitialized = false;
   var initialValues = initializeValues();
   var [letters, setLetters] = useState(initialValues.storedLetters ?? [[{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""}], 
                                        [{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""}], 
@@ -52,6 +50,7 @@ function App() {
   var [xIndex, setXIndex] = useState(0);
   var [yIndex, setYIndex] = useState(initialValues.storedGuesses ?? 0);
   var [guessHistory, setGuessHistory] = useState(initialValues.guessHistory ?? [0,0,0,0,0,0,0]);
+  var [test, setTest] = useState(0);
 
   var currentWord = [''];
 
@@ -63,9 +62,6 @@ function App() {
       isComplete: null,
       guessHistory: null
     };
-
-    if(!isInitialized) {
-
       var dayCompleted = window.localStorage.getItem('activeDate');
   
       if (dayCompleted) {
@@ -88,8 +84,8 @@ function App() {
         } else {
           result.storedLetters = JSON.parse(window.localStorage.getItem('letters'));
           result.storedKeys = JSON.parse(window.localStorage.getItem('keys'));
-          result.storedGuesses = window.localStorage.getItem('numGuesses');
-          result.isComplete = window.localStorage.getItem('isComplete');
+          result.storedGuesses = parseInt(window.localStorage.getItem('numGuesses'));
+          result.isComplete = ( window.localStorage.getItem('isComplete') == 'true');
 
           var gHistory = window.localStorage.getItem('history');
           if(gHistory) {
@@ -98,8 +94,6 @@ function App() {
 
         }
       }
-      isInitialized = true;
-    }
     return result;
   }
 
@@ -141,10 +135,13 @@ function App() {
       enteredWord.push(element.letter)
     );
 
+    var updateLetters = letters; 
+
     for(var i = 0; i < enteredWord.length; i++)
     {
       if(enteredWord[i] == testingWord[i]) {
-         setLetters(letters[yIndex][i].className = "correct-letter letter-set");
+        updateLetters[yIndex][i].className = "correct-letter letter-set"
+         setLetters(letters = updateLetters);
          setKeyClass(enteredWord[i], "correct-letter");
          testingWord[i] = "";
       } else {
@@ -156,10 +153,12 @@ function App() {
       if(testingWord.includes(enteredWord[element])) {
         let matchedIndex = testingWord.indexOf(enteredWord[element]);
         testingWord[matchedIndex] = "";
-        setLetters(letters[yIndex][element].className = "in-word letter-set");
+        updateLetters[yIndex][element].className = "in-word letter-set"
+        setLetters(letters = updateLetters);
         setKeyClass(enteredWord[element], "in-word");
       } else {
-        setLetters(letters[yIndex][element].className = "wrong-letter letter-set");
+        updateLetters[yIndex][element].className = "wrong-letter letter-set"
+        setLetters(letters = updateLetters);
         setKeyClass(enteredWord[element], "wrong-letter");
       }
     });
@@ -183,13 +182,15 @@ function App() {
     inputLetter = inputLetter.toUpperCase();
     let letterRegex = /^[a-z]$/i;
 
+    var updateLetters = letters;
+
     if (inputLetter == "ENTER") {
       if(letters[yIndex][4].letter != '') {
         let correctResponse = compareWords();
 
         window.localStorage.setItem('letters', JSON.stringify(letters));
         window.localStorage.setItem('keys', JSON.stringify(keys));
-        window.localStorage.setItem('numGuesses', numGuesses);
+        window.localStorage.setItem('numGuesses', yIndex + 1);
         window.localStorage.setItem('activeDate', new Date());
         window.localStorage.setItem('isComplete', correctResponse);
 
@@ -203,14 +204,14 @@ function App() {
           setXIndex(xIndex = 0);
         }
 
-        if(correctResponse || (yIndex == 5 && !correctResponse)) {
+        if (correctResponse || (yIndex == 5 && !correctResponse)) {
           var history = window.localStorage.getItem('history');
 
-          if(history) {
+          if (history) {
             history = history.split(',').map(Number);
             history[numGuesses - 1] = history[numGuesses - 1] + 1;
           } else {
-            history = [0,0,0,0,0,0,0];
+            history = [0, 0, 0, 0, 0, 0, 0];
             history[numGuesses - 1] = 1;
           }
           window.localStorage.setItem('history', history);
@@ -218,24 +219,31 @@ function App() {
         }
       }
 
-    } else if (inputLetter == "BACKSPACE") {
+    } else if (inputLetter.includes("BACK")) {
       if (xIndex != 0 && yIndex != 6) {
         if (xIndex == 4 && letters[yIndex][xIndex].letter != '') {
-          setLetters(letters[yIndex][xIndex].letter = '');
+          updateLetters[yIndex][xIndex].letter = ''
+          setLetters(letters = updateLetters);
         }
         else {
-          setLetters(letters[yIndex][xIndex - 1].letter = '');
+          updateLetters[yIndex][xIndex - 1].letter = ''
+          setLetters(letters = updateLetters);
           setXIndex(xIndex = xIndex - 1);
         }
       }
     }
     else if (letterRegex.test(inputLetter)) {
-      setLetters(letters[yIndex][xIndex].letter = inputLetter.toUpperCase());
-      setLetters(letters = letters);
+      updateLetters[yIndex][xIndex].letter = inputLetter.toUpperCase()
+      setLetters(letters = updateLetters);
+      var blah = xIndex;
+      setXIndex(xIndex = xIndex - 1);
+      setXIndex(xIndex = xIndex + 1);
+
       if (xIndex < 4) {
         setXIndex(xIndex = xIndex + 1);
       }
     }
+    setTest(test = test + 1);
   }
 
   React.useEffect(() => {
@@ -250,9 +258,8 @@ function App() {
   return (
     <div className="word-container">
       <h1 className="page-title">BORTLE</h1>
-      <CongratsMessage numGuesses={numGuesses}></CongratsMessage>
       <CompleteModal isComplete={isComplete} letters={letters} numGuesses={numGuesses} guessHistory={guessHistory}></CompleteModal>
-      <LetterGrid letters={letters}></LetterGrid>
+      <LetterGrid key={test} letters={letters}></LetterGrid>
       <KeyBoard keys={keys} clickFunction={processLetter}></KeyBoard>
     </div>
   );
