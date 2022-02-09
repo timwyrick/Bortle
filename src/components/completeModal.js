@@ -12,9 +12,10 @@ class CompleteModal extends React.Component {
         "You're a bonifide Bortified chatter",
         "A solid display of Bort knowledge",
         "Eek. Maybe brush up on your Bort history",
-        "You call yourself a Bort chatter?"], isCopied: "hidden" }
+        "You call yourself a Bort chatter?"], isCopied: "hidden", isComplete: props.isComplete }
 
         this.copyToClipBoard = this.copyToClipBoard.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
     
     copyToClipBoard() {
@@ -40,23 +41,30 @@ class CompleteModal extends React.Component {
           this.setState({isCopied: "visible"});
     }
 
+    closeModal() {
+        this.setState({isComplete: false});
+    }
+
     render() {
         return (
-            <div className="modal" tabindex="-1" role="dialog" style={{ display: this.props.isComplete ? "block" : "none" }}>
+            <div className="modal" tabindex="-1" role="dialog" style={{ display: this.state.isComplete ? "block" : "none" }}>
                 <div className="modal-dialog modal-dialog-centered " role="document">
                     <div className="modal-content">
+                        <button type="button" className="close confirm-button" onClick={this.closeModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         <div className="modal-body">
                             <div className="congrats-message">
                                 {this.state.messages[this.props.numGuesses - 1]}
                             </div>
                             <CompletionGraph guessHistory={this.props.guessHistory}></CompletionGraph>
-                            <div class="row">
+                            <div className="row">
                                 <RemainingTime></RemainingTime>
                                 <div className="share-button col" onClick={this.copyToClipBoard}>
                                     SHARE
-                                    <div style={{visibility: this.state.isCopied, fontSize: '12px'}}>Copied to clipboard!</div>
+                                    <div style={{ visibility: this.state.isCopied, fontSize: '12px' }}>Copied to clipboard!</div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
