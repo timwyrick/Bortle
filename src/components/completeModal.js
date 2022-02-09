@@ -12,7 +12,7 @@ class CompleteModal extends React.Component {
         "You're a bonifide Bortified chatter",
         "A solid display of Bort knowledge",
         "Eek. Maybe brush up on your Bort history",
-        "You call yourself a Bort chatter?"] }
+        "You call yourself a Bort chatter?"], isCopied: "hidden" }
 
         this.copyToClipBoard = this.copyToClipBoard.bind(this);
     }
@@ -36,6 +36,8 @@ class CompleteModal extends React.Component {
           });
 
           navigator.clipboard.writeText(copiedText);
+
+          this.setState({isCopied: "visible"});
     }
 
     render() {
@@ -52,7 +54,9 @@ class CompleteModal extends React.Component {
                                 <RemainingTime></RemainingTime>
                                 <div className="share-button col" onClick={this.copyToClipBoard}>
                                     SHARE
+                                    <div style={{visibility: this.state.isCopied, fontSize: '12px'}}>Copied to clipboard!</div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

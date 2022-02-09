@@ -15,7 +15,7 @@ function App() {
                                        [{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""}], 
                                        [{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""},{letter: "", className: ""}]]);
 
-  var [keys, setKeys] = useState(initializeValues.storedKeys ?? [[{letter: "Q", className: ""},
+  var [keys, setKeys] = useState(initialValues.storedKeys ?? [[{letter: "Q", className: ""},
                                   {letter: "W", className: ""},
                                   {letter: "E", className: ""},
                                   {letter: "R", className: ""},
