@@ -12,7 +12,7 @@ class CompleteModal extends React.Component {
         "You're a bonifide Bortified chatter",
         "A solid display of Bort knowledge",
         "Eek. Maybe brush up on your Bort history",
-        "You call yourself a Bort chatter?"], isCopied: "hidden", isComplete: props.isComplete }
+        "You call yourself a Bort chatter?"], isCopied: "hidden", turnedOff: false}
 
         this.copyToClipBoard = this.copyToClipBoard.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -42,12 +42,12 @@ class CompleteModal extends React.Component {
     }
 
     closeModal() {
-        this.setState({isComplete: false});
+        this.setState({turnedOff: true});
     }
 
     render() {
         return (
-            <div className="modal" tabindex="-1" role="dialog" style={{ display: this.state.isComplete ? "block" : "none" }}>
+            <div className="modal" tabindex="-1" role="dialog" style={{ display: this.props.isComplete && !this.state.turnedOff ? "block" : "none" }}>
                 <div className="modal-dialog modal-dialog-centered " role="document">
                     <div className="modal-content">
                         <button type="button" className="close confirm-button" onClick={this.closeModal}>
